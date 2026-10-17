@@ -160,3 +160,25 @@ CI runs the suite on Python 3.10 / 3.11 / 3.12.
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Architecture
+
+```mermaid
+flowchart LR
+    CLI[apireplay CLI] --> REC[record: capture live API traffic]
+    REC --> SAN[sanitize: strip secrets and PII]
+    SAN --> REP[replay: re-send captured requests]
+    REP --> DIFF[diff: compare responses field-by-field]
+    DIFF --> RPT[report: markdown summary of regressions]
+```
+
+## Design trade-offs
+
+- **Stdlib only, zero dependencies** — installs anywhere, including locked-down CI runners, with a plain `pip install`. The cost: no `click`/`typer` niceties; `argparse` does the job.
+- **File-based recordings, not a database** — recordings are plain files you can diff, grep, and check into git next to the code they test. A SQLite store would query better but adds a format nobody can read without the tool.
+- **Synchronous replay** — deterministic ordering makes diffs trustworthy. Parallel replay would be faster for large suites but makes timing-related diffs flaky, and speed wasn't the bottleneck being solved.
+
+## Known limitations
+
+- Latency comparisons are wall-clock and environment-sensitive — the 50ms→600ms regression in the demo is deliberately exaggerated; real thresholds need per-environment calibration.
+- 49 tests green; CI runs on Python 3.10 / 3.11 / 3.12.
