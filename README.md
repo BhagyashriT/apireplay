@@ -157,10 +157,6 @@ bash demo/run.sh
 
 CI runs the suite on Python 3.10 / 3.11 / 3.12.
 
-## License
-
-MIT — see [LICENSE](LICENSE).
-
 ## Architecture
 
 ```mermaid
@@ -182,3 +178,7 @@ flowchart LR
 
 - Latency comparisons are wall-clock and environment-sensitive — the 50ms→600ms regression in the demo is deliberately exaggerated; real thresholds need per-environment calibration.
 - 49 tests green; CI runs on Python 3.10 / 3.11 / 3.12.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
