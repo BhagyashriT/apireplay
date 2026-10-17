@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apireplay"
+version = "0.1.0"
+description = "Reproduce backend bugs without production access: record, sanitize, replay, and diff HTTP traffic"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Bhagyashri Thorat" }]
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+apireplay = "apireplay.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
